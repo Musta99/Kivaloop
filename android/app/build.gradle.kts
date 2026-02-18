@@ -20,7 +20,7 @@ val localProperties = Properties().apply {
 android {
     namespace = "com.example.kivaloop"
     compileSdk = 35
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
