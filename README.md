@@ -176,8 +176,15 @@ dependencies:
   provider:
   image_picker:
   http:
-  mapbox_gl:
   flutter_easyloading:
+  mapbox_maps_flutter:
+  geolocator:
+  flutter_easyloading:
+  image_picker:
+  http:
+  uuid:
+  flutter_screenutil:
+  geocoding:
 ```
 
 ---
