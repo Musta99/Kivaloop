@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(scaffoldBackgroundColor: Color(0xffFCFCFC)),
-              home: LoginScreen(),
+              home: BottomNavbarScreen()
               // FirebaseAuth.instance.currentUser != null
               //     ? initialScreen
               //     : LoginScreen(),
