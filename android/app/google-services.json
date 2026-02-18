@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "892914047958",
+    "project_id": "kivaloop-fc52e",
+    "storage_bucket": "kivaloop-fc52e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:892914047958:android:fce334f131deff0377e277",
+        "android_client_info": {
+          "package_name": "com.example.kivaloop"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIBGvsjBxVS0CEkd7KVUGhgdTp1ca7nsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
