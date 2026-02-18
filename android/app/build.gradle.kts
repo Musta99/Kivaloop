@@ -1,3 +1,4 @@
+import java.util.Properties  // ✅ Add this
 plugins {
     id("com.android.application")
     // START: FlutterFire Configuration
@@ -6,6 +7,14 @@ plugins {
     id("kotlin-android")
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
+}
+
+// ✅ Load local.properties at TOP LEVEL (outside android block)
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -21,6 +30,11 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+       // ✅ Add this
+    buildFeatures {
+        buildConfig = true
+    }
+
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
@@ -33,6 +47,7 @@ android {
         versionName = flutter.versionName
         // Mapbox token from local.properties
         manifestPlaceholders["MAPBOX_TOKEN"] = localProperties.getProperty("MAPBOX_TOKEN", "")
+        buildConfigField("String", "MAPBOX_TOKEN", "\"${localProperties.getProperty("MAPBOX_TOKEN", "")}\"")
     }
 
     buildTypes {
