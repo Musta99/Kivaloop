@@ -707,7 +707,7 @@ class _HomeScreenState extends State<HomeScreen> {
             floating: true,
             pinned: true,
             elevation: 0,
-            backgroundColor: _isScrolled ? Colors.white : Color(0xFFFAF8F5),
+            backgroundColor: Color(0xFF5C4033),
             automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(

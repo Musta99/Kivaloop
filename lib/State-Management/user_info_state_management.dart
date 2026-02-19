@@ -7,18 +7,27 @@ class UserInfoStateManagement extends ChangeNotifier {
   String userProfileImage = "";
   String userEmail = "";
 
-  void fetchUserInformation() async {
-    DocumentSnapshot documentSnapshot =
-        await FirebaseFirestore.instance
-            .collection("UserData")
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .get();
+void fetchUserInformation() async {
+  User? user = FirebaseAuth.instance.currentUser;
 
-    userName = documentSnapshot["userName"];
-    userProfileImage = documentSnapshot["profileImageUrl"];
-    userEmail = documentSnapshot["email"];
+  if (user == null) {
+    print("User not logged in");
+    return;
+  }
+
+  DocumentSnapshot documentSnapshot =
+      await FirebaseFirestore.instance
+          .collection("UserData")
+          .doc(user.uid)
+          .get();
+
+  if (documentSnapshot.exists) {
+    userName = documentSnapshot["userName"] ?? "";
+    userProfileImage = documentSnapshot["profileImageUrl"] ?? "";
+    userEmail = documentSnapshot["email"] ?? "";
     notifyListeners();
   }
+}
 
   String name = "";
 
@@ -31,19 +40,26 @@ class UserInfoStateManagement extends ChangeNotifier {
   // Fetching User's Own Story
   String? finalStoryImageUrl;
 
-  Future fetchSelfStory() async {
-    DocumentSnapshot documentSnapshot =
-        await FirebaseFirestore.instance
-            .collection("stories")
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .get();
+Future fetchSelfStory() async {
+  User? user = FirebaseAuth.instance.currentUser;
 
-    if (documentSnapshot.exists) {
-      finalStoryImageUrl = documentSnapshot["imageUrl"];
-      notifyListeners();
-    } else {
-      finalStoryImageUrl = "";
-      notifyListeners();
-    }
+  if (user == null) {
+    print("User not logged in");
+    return;
   }
+
+  DocumentSnapshot documentSnapshot =
+      await FirebaseFirestore.instance
+          .collection("stories")
+          .doc(user.uid)
+          .get();
+
+  if (documentSnapshot.exists) {
+    finalStoryImageUrl = documentSnapshot["imageUrl"] ?? "";
+  } else {
+    finalStoryImageUrl = "";
+  }
+
+  notifyListeners();
+}
 }

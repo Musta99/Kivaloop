@@ -21,19 +21,29 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  DocumentSnapshot snapshot =
-      await FirebaseFirestore.instance
-          .collection("UserData")
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .get();
 
-  final userRole = snapshot["userType"];
-  Widget initialScreen =
-      userRole == "Customer"
-          ? BottomNavbarScreen()
-          : ShopPartnerBottomNavbarScreen();
+  User? user = FirebaseAuth.instance.currentUser;
 
-  runApp(MyApp(initialScreen: initialScreen));
+  Widget initialScreen;
+
+  if (user == null) {
+    // User not logged in
+    initialScreen = LoginScreen();
+  } else {
+    // Fetch role
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("UserData")
+        .doc(user.uid)
+        .get();
+
+    final userRole = snapshot["userType"];
+
+    initialScreen = userRole == "Customer"
+        ? BottomNavbarScreen()
+        : ShopPartnerBottomNavbarScreen();
+  }
+
+  runApp(MyApp(initialScreen: BottomNavbarScreen()));
 }
 
 class MyApp extends StatelessWidget {
@@ -86,10 +96,10 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
               theme: ThemeData(scaffoldBackgroundColor: Color(0xffFCFCFC)),
-              home: BottomNavbarScreen()
-              // FirebaseAuth.instance.currentUser != null
-              //     ? initialScreen
-              //     : LoginScreen(),
+              home:
+              FirebaseAuth.instance.currentUser != null
+                  ? initialScreen
+                  : LoginScreen(),
             );
 
             // ShadApp(
